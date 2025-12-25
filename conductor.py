@@ -9,7 +9,7 @@ while webcam.isOpened():
     success, img = webcam.read()
 
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) #difference in opencv and mediapipes' color model
-    result = mp_hands.Hands(max_num_hands=2).process(img)
+    result = mp_hands.Hands(max_num_hands=2, min_detection_confidence=0.3, min_tracking_confidence=0.3).process(img)
 
     img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR) #change image color back
     if result.multi_hand_landmarks: #any hand detected
