@@ -2,13 +2,25 @@ import cv2
 import mediapipe as mp
 
 mp_hands = mp.solution.hands
-mp.drawing=mp.solutions.drawing_utils
+mp_drawing=mp.solutions.drawing_utils
 
 webcam = cv2.VideoCapture(0)
 while webcam.isOpened():
     success, img = webcam.read()
 
-    img = cv2.cvtColor(img, cvt.COLOR_BGR2RGB)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) #difference in opencv and mediapipes' color model
     result = mp_hands.Hands().process(img)
+
+    img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR) #change image color back
+    if result.multi_hand_landmarks: #any hand detected
+        for hand_landmarks in result.multi_hand_landmarks:
+            mp_drawing.draw_landmarks(img, hand_landmarks, connections=mp_hands.HAND_CONNECTIONS)
+
+        
+
+
+
+
+
 
 
