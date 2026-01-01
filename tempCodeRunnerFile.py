@@ -25,7 +25,7 @@ while webcam.isOpened():
     h = int(img.shape[0])
     w = int(img.shape[1])
 
-    o = int(h/7)
+    o = int(h/8)
 
     cv2.line(img, (0,o),(w,o),(217,221,220), 1)
     cv2.line(img, (0,2*o),(w,2*o),(217,221,220), 1)
@@ -33,6 +33,7 @@ while webcam.isOpened():
     cv2.line(img, (0,4*o),(w,4*o),(217,221,220), 1)
     cv2.line(img, (0,5*o),(w,5*o),(217,221,220), 1)
     cv2.line(img, (0,6*o),(w,6*o),(217,221,220), 1)
+    cv2.line(img, (0,7*o),(w,7*o),(217,221,220), 1)
     
     cv2.imshow('Conductor',cv2.flip(img, 1)) #mirroring the image
     if cv2.waitKey(5) & 0xFF == ord('q'):
