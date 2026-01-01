@@ -67,8 +67,6 @@ while webcam.isOpened():
             elif whichhand == "Left":
                 right.region = region
 
-            
-
 
     #lines for note regions-------------------------------------------------------------------------------------------
     cv2.line(img, (0,o),(w,o),(217,221,220), 1)
