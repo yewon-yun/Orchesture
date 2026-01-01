@@ -4,13 +4,27 @@ import mediapipe as mp
 mp_hands = mp.solutions.hands
 mp_drawing=mp.solutions.drawing_utils
 
-webcam = cv2.VideoCapture(0)
+webcam = cv2.VideoCapture(0) #capturing the webcam
+
+#region class to determine what pitch its supposed to be at
+class Region:
+    def __init__(self, region=None, highoct=False):
+        self.region = region
+        self.highoct = highoct
+
+state = Region()
+
 while webcam.isOpened():
     success, img = webcam.read()
 
     if not success:
         print("ignoring empty web cam")
         continue
+
+    #for easier calculation
+    h = int(img.shape[0])
+    w = int(img.shape[1])
+    o = int(h/7)
 
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) #difference in opencv and mediapipe's color model
     result = mp_hands.Hands(max_num_hands=2, min_detection_confidence=0.3, min_tracking_confidence=0.3).process(img)
@@ -21,11 +35,6 @@ while webcam.isOpened():
             mp_drawing.draw_landmarks(img, hand_landmarks, connections=mp_hands.HAND_CONNECTIONS)
 
     #lines for note regions
-
-    h = int(img.shape[0])
-    w = int(img.shape[1])
-
-    o = int(h/7)
 
     cv2.line(img, (0,o),(w,o),(217,221,220), 1)
     cv2.line(img, (0,2*o),(w,2*o),(217,221,220), 1)
@@ -40,10 +49,4 @@ while webcam.isOpened():
 
 webcam.release()
 cv2.destroyAllWindows
-
-
-
-
-
-
 
