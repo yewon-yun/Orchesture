@@ -1,5 +1,6 @@
 import cv2
 import mediapipe as mp
+import joblib
 
 notes = ["B", "A", "G", "F", "E", "D", "C"]
 
