@@ -14,7 +14,7 @@ def _dist(a, b):
 
 def extract_features(landmarks):
     feature = []
-    scale = _dist(landmarks[0], landmarks[9])
+    scale = _dist(landmarks[0], landmarks[9]) + 1e-6
 
     for i in landmarks:
         feature.append((i.x-landmarks[0].x)/scale)
