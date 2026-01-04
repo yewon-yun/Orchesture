@@ -81,7 +81,7 @@ while webcam.isOpened():
             pos = hand_landmarks.landmark[12]
             pos_pixel = pos.y * h #because pos.y is a decimal between 0.0 and 1.0
 
-            region = max(0, min(6, int(pos_pixel / o))) #using the 7 divide we used earlier to determine the position, bound between 0 and 6 cuz it might cause an error otherwise
+            region = max(0, min(6, int(pos_pixel / o))) #using the 7 divide we used earlier to determine the position, bound between 0 and 6
 
             if whichhand == "Right":
                 left.region = region
@@ -120,13 +120,22 @@ while webcam.isOpened():
 
     #show image-------------------------------------------------------------------------------------------------------
     img = cv2.flip(img,1)
+
+    octav = "+1" if right.highoct==True else "0"
+    shar = "#" if right.sharp==True else " "
+    
+    mino = "m" if left.minor==True else "M"
+    sev = "7" if left.seven==True else " "
+
+
+
     
     if right.region is not None:
-        cv2.putText(img, f"Right region: {notes[right.region]}", (10, 30),
+        cv2.putText(img, f"Right region: {notes[right.region]}{shar}{octav}", (10, 30),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 2)
 
     if left.region is not None:
-        cv2.putText(img, f"Left region: {notes[left.region]}", (10, 60), 
+        cv2.putText(img, f"Left region: {notes[left.region]}{mino}{sev}", (10, 60), 
                     cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 2)
 
     cv2.imshow('Conductor',img) #mirroring the image
