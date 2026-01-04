@@ -13,7 +13,7 @@ def _dist(a, b):
 
 def extract_features(landmarks):
     feature = []
-    scale = _dist(landmarks[0], landmarks[9])
+    scale = _dist(landmarks[0], landmarks[9]) + 1e-6
 
     for i in landmarks:
         feature.append((i.x-landmarks[0].x)/scale)
@@ -81,7 +81,7 @@ while webcam.isOpened():
             pos = hand_landmarks.landmark[12]
             pos_pixel = pos.y * h #because pos.y is a decimal between 0.0 and 1.0
 
-            region = int(pos_pixel/o) #using the 7 divide we used earlier to determine the position
+            region = max(0, min(6, int(pos_pixel / o))) #using the 7 divide we used earlier to determine the position, bound between 0 and 6 cuz it might cause an error otherwise
 
             if whichhand == "Right":
                 left.region = region
