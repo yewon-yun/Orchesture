@@ -17,7 +17,7 @@ def extract_features(landmarks):
 
     for i in landmarks:
         feature.append((i.x-landmarks[0].x)/scale)
-        feature.append((i.y-landmarks[0]).y/scale)
+        feature.append((i.y-landmarks[0].y)/scale)
 
     return feature
 
@@ -66,9 +66,6 @@ while webcam.isOpened():
     result = hands.process(img)
 
     img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR) #change image color back
-    if result.multi_hand_landmarks: #any hand detected
-        for hand_landmarks in result.multi_hand_landmarks:
-            mp_drawing.draw_landmarks(img, hand_landmarks, connections=mp_hands.HAND_CONNECTIONS)
 
     if result.multi_hand_landmarks and result.multi_handedness: #let's say the hand exists
         #for each hand
