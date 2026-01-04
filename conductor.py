@@ -1,8 +1,25 @@
 import cv2
 import mediapipe as mp
 import joblib
+import math
 
 notes = ["B", "A", "G", "F", "E", "D", "C"]
+
+#the functions from the training model-----------------------------------------------------------------------------
+model = joblib.load("models/knn_model.joblib") #for the two trained gestures we got
+
+def _dist(a, b):
+    return math.hypot(a.x - b.x, a.y - b.y) #the standard wrist to middlefinger distance for each hand
+
+def extract_features(landmarks):
+    feature = []
+    scale = _dist(landmarks[0], landmarks[9])
+
+    for i in landmarks:
+        feature.append((i.x-landmarks[0].x)/scale)
+        feature.append((i.y-landmarks[0]).y/scale)
+
+    return feature
 
 #region class to determine what pitch its supposed to be at---------------------------------------------------------
 class RightPitch:
@@ -14,8 +31,8 @@ class RightPitch:
 class LeftChord:
     def __init__(self, region=None, minor=False, seven=False):
         self.region = region
-        self.minor = False
-        self.seven = False
+        self.minor = minor
+        self.seven = seven
 
 
 right = RightPitch()
@@ -42,6 +59,8 @@ while webcam.isOpened():
 
 
     #using mediapipe------------------------------------------------------------------------------------------------
+
+    gesture = model.predict([features])[0]
 
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) #difference in opencv and mediapipe's color model
     result = mp_hands.Hands(max_num_hands=2, min_detection_confidence=0.3, min_tracking_confidence=0.3).process(img)
@@ -95,5 +114,5 @@ while webcam.isOpened():
         break
 
 webcam.release()
-cv2.destroyAllWindows
+cv2.destroyAllWindows()
 

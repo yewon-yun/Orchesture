@@ -18,7 +18,7 @@ def extract_features(landmarks):
 
     for i in landmarks:
         feature.append((i.x-landmarks[0].x)/scale)
-        feature.append((i.x-landmarks[0])/scale)
+        feature.append((i.y-landmarks[0].y)/scale)
 
     return feature
 
