@@ -45,6 +45,8 @@ mp_drawing=mp.solutions.drawing_utils
 #webcam track-------------------------------------------------------------------------------------------------------
 webcam = cv2.VideoCapture(0) #capturing the webcam
 
+hands = mp_hands.Hands(max_num_hands=2, min_detection_confidence=0.3, min_tracking_confidence=0.3)
+
 while webcam.isOpened():
     success, img = webcam.read()
 
@@ -60,20 +62,22 @@ while webcam.isOpened():
 
     #using mediapipe------------------------------------------------------------------------------------------------
 
-    gesture = model.predict([features])[0]
-
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) #difference in opencv and mediapipe's color model
-    result = mp_hands.Hands(max_num_hands=2, min_detection_confidence=0.3, min_tracking_confidence=0.3).process(img)
+    result = hands.process(img)
 
     img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR) #change image color back
     if result.multi_hand_landmarks: #any hand detected
         for hand_landmarks in result.multi_hand_landmarks:
             mp_drawing.draw_landmarks(img, hand_landmarks, connections=mp_hands.HAND_CONNECTIONS)
 
-    if result.multi_hand_landmarks and result.multi_handedness:
+    if result.multi_hand_landmarks and result.multi_handedness: #let's say the hand exists
+        #for each hand
         for i in range(len(result.multi_hand_landmarks)):
             hand_landmarks = result.multi_hand_landmarks[i] #which hand
             whichhand = result.multi_handedness[i].classification[0].label #left or right
+
+            features = extract_features(hand_landmarks.landmark)
+            gesture = model.predict([features])[0] #we use the model to actually track the hand gestures
 
             mp_drawing.draw_landmarks(img, hand_landmarks, connections=mp_hands.HAND_CONNECTIONS)
 
@@ -84,8 +88,28 @@ while webcam.isOpened():
 
             if whichhand == "Right":
                 left.region = region
+                if gesture == "pinky":
+                    left.seven = True
+                else:
+                    left.seven = False
+
+                if gesture == "thumb":
+                    left.minor = True
+                else:
+                    left.minor = False
+
             elif whichhand == "Left":
                 right.region = region
+                if gesture == "pinky":
+                    right.highoct = True
+                else:
+                    right.highoct = False
+
+                if gesture == "thumb":
+                    right.sharp = True
+                else:
+                    right.sharp = False
+
 
 
     #lines for note regions-------------------------------------------------------------------------------------------
