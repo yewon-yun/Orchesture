@@ -132,11 +132,11 @@ while webcam.isOpened():
     
     if right.region is not None:
         cv2.putText(img, f"Right region: {notes[right.region]}{shar}{octav}", (10, 30),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 2)
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 0), 2)
 
     if left.region is not None:
         cv2.putText(img, f"Left region: {notes[left.region]}{mino}{sev}", (10, 60), 
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 2)
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 0), 2)
 
     cv2.imshow('Conductor',img) #mirroring the image
 
