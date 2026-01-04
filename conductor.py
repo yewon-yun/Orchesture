@@ -23,16 +23,19 @@ def extract_features(landmarks):
 
 #region class to determine what pitch its supposed to be at---------------------------------------------------------
 class RightPitch:
-    def __init__(self, region=None, highoct=False, sharp=False):
+    def __init__(self, region=None, highoct=False, sharp=False, stop=False):
         self.region = region
         self.highoct = highoct
         self.sharp = sharp
+        self.stop = stop
+
 
 class LeftChord:
-    def __init__(self, region=None, minor=False, seven=False):
+    def __init__(self, region=None, minor=False, seven=False, stop=False):
         self.region = region
         self.minor = minor
         self.seven = seven
+        self.stop = stop
 
 
 right = RightPitch()
@@ -45,7 +48,7 @@ mp_drawing=mp.solutions.drawing_utils
 #webcam track-------------------------------------------------------------------------------------------------------
 webcam = cv2.VideoCapture(0) #capturing the webcam
 
-hands = mp_hands.Hands(max_num_hands=2, min_detection_confidence=0.3, min_tracking_confidence=0.3)
+hands = mp_hands.Hands(max_num_hands=2, min_detection_confidence=0.5, min_tracking_confidence=0.5)
 
 while webcam.isOpened():
     success, img = webcam.read()
@@ -94,6 +97,11 @@ while webcam.isOpened():
                     left.minor = True
                 else:
                     left.minor = False
+                
+                if gesture == "stop":
+                    left.stop = True
+                else:
+                    left.stop = False
 
             elif whichhand == "Left":
                 right.region = region
@@ -106,6 +114,10 @@ while webcam.isOpened():
                     right.sharp = True
                 else:
                     right.sharp = False
+                if gesture == "stop":
+                    right.stop = True
+                else:
+                    right.stop = False
 
 
 
@@ -130,12 +142,18 @@ while webcam.isOpened():
 
 
     
-    if right.region is not None:
+    if right.region is not None and right.stop == False:
         cv2.putText(img, f"Right region: {notes[right.region]}{shar}{octav}", (10, 30),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 0), 2)
+    else:
+        cv2.putText(img, f"Right region: break", (10, 30),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 0), 2)
 
-    if left.region is not None:
+    if left.region is not None and left.stop == False:
         cv2.putText(img, f"Left region: {notes[left.region]}{mino}{sev}", (10, 60), 
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 0), 2)
+    else:
+        cv2.putText(img, f"Left region: break", (10, 30),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 0), 2)
 
     cv2.imshow('Conductor',img) #mirroring the image
