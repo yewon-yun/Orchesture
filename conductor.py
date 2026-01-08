@@ -153,7 +153,7 @@ while webcam.isOpened():
         cv2.putText(img, f"Left region: {notes[left.region]}{mino}{sev}", (10, 60), 
                     cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 0), 2)
     else:
-        cv2.putText(img, f"Left region: break", (10, 30),
+        cv2.putText(img, f"Left region: break", (10, 60),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 0), 2)
 
     cv2.imshow('Conductor',img) #mirroring the image
