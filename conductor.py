@@ -81,29 +81,24 @@ while webcam.isOpened():
 
             mp_drawing.draw_landmarks(img, hand_landmarks, connections=mp_hands.HAND_CONNECTIONS)
 
-            pos = hand_landmarks.landmark[12]
+            pos = hand_landmarks.landmark[0]
             pos_pixel = pos.y * h #because pos.y is a decimal between 0.0 and 1.0
 
             region = max(0, min(6, int(pos_pixel / o))) #using the 7 divide we used earlier to determine the position, bound between 0 and 6
 
             if whichhand == "Right":
-                left.region = region
-                if gesture == "pinky":
-                    left.seven = True
-                else:
-                    left.seven = False
 
-                if gesture == "thumb":
-                    left.minor = True
-                else:
-                    left.minor = False
-                
+                left.region = region
                 if gesture == "stop":
                     left.stop = True
                 else:
                     left.stop = False
                 
-                if gesture == "both":
+                if gesture == "pinky":
+                    left.seven = True
+                elif gesture == "thumb":
+                    left.minor = True
+                elif gesture == "both":
                     left.seven = True
                     left.minor = True
                 else:
@@ -112,20 +107,16 @@ while webcam.isOpened():
 
             elif whichhand == "Left":
                 right.region = region
-                if gesture == "pinky":
-                    right.highoct = True
-                else:
-                    right.highoct = False
-
-                if gesture == "thumb":
-                    right.sharp = True
-                else:
-                    right.sharp = False
                 if gesture == "stop":
                     right.stop = True
                 else:
                     right.stop = False
-                if gesture == "both":
+
+                if gesture == "pinky":
+                    right.highoct = True
+                elif gesture == "thumb":
+                    right.sharp = True
+                elif gesture == "both":
                     right.highoct = True
                     right.sharp = True
                 else:
