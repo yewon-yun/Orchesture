@@ -102,6 +102,13 @@ while webcam.isOpened():
                     left.stop = True
                 else:
                     left.stop = False
+                
+                if gesture == "both":
+                    left.seven = True
+                    left.minor = True
+                else:
+                    left.seven = False
+                    left.minor = False
 
             elif whichhand == "Left":
                 right.region = region
@@ -118,6 +125,12 @@ while webcam.isOpened():
                     right.stop = True
                 else:
                     right.stop = False
+                if gesture == "both":
+                    right.highoct = True
+                    right.sharp = True
+                else:
+                    right.highoct = False
+                    right.sharp = False
 
 
 

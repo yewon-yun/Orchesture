@@ -77,6 +77,8 @@ def main():
             current_label = "pinky"
         elif key == ord("3"):
             current_label = "stop"
+        elif key == ord("4"):
+            current_label = "both"
 
     cap.release()
     cv2.destroyAllWindows()
