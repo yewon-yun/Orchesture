@@ -94,10 +94,10 @@ while webcam.isOpened():
                 else:
                     left.stop = False
                 
-                if gesture == "pinky":
-                    left.seven = True
-                elif gesture == "thumb":
+                if gesture == "pinky": #supposed to be index
                     left.minor = True
+                elif gesture == "thumb":
+                    left.seven = True
                 elif gesture == "both":
                     left.seven = True
                     left.minor = True
