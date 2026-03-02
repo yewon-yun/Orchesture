@@ -2,6 +2,8 @@ import cv2
 import mediapipe as mp
 import joblib
 import math
+import os
+import pygame
 
 notes = ["B", "A", "G", "F", "E", "D", "C"]
 
@@ -20,6 +22,9 @@ def extract_features(landmarks):
         feature.append((i.y-landmarks[0].y)/scale)
 
     return feature
+
+#functions to actually play music-----------------------------------------------------------------------------------
+
 
 #region class to determine what pitch its supposed to be at---------------------------------------------------------
 class RightPitch:
