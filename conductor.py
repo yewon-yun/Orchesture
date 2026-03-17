@@ -4,6 +4,7 @@ import joblib
 import math
 import os
 import pygame
+from player import play_chord
 
 notes = ["B", "A", "G", "F", "E", "D", "C"]
 
@@ -127,6 +128,8 @@ while webcam.isOpened():
                 else:
                     right.highoct = False
                     right.sharp = False
+
+    play_chord(region=left.region, notes=notes, is_minor=left.minor, stop=left.stop)
 
 
 
