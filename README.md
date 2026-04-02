@@ -17,6 +17,8 @@ Are interested in alternative musical interfaces for education and creativity
 Orchesture functions like a virtual piano, but in a broader and more expressive way—allowing users to play full chords and musical structures directly through motion.
 
 ## Features
+<img width="527" height="573" alt="gesture" src="https://github.com/user-attachments/assets/4b0f71c0-8d6a-4d99-b607-262952794204" />
+
 
 Two-hand control system
 
