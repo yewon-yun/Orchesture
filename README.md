@@ -32,8 +32,8 @@ Wrist position determines pitch
 
 Gesture-based modifiers
 - fist : stop playing note
-- okay sign : # for right hand, 7th for left hand
-- point : +1 octave for right hand, minor for left hand
+- okay sign : +1 octave for right hand, minor for left hand
+- point : # for right hand, 7th for left hand
 
 ## Custom gesture training system
 
